@@ -60,4 +60,4 @@
         android:onClick="stopService"
         android:text="StopTrain" />
 
-</RelativeLayout><!-- From: file:/C:/Users/mudassir/StudioProjects/rig1/app/src/main/res/layout/activity_main.xml -->
+</RelativeLayout><!-- From: file:/D:/1Bs.Cs/android%20work/fyp%20November%205/HumanActivityRecognitionUsingAndroidPhoneSensors/app/src/main/res/layout/activity_main.xml -->

@@ -14,15 +14,25 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
+import com.example.rig.featureExtraction.IFeatureExtractor;
+import com.example.rig.featureExtraction.IFrequencyFeatures;
+import com.example.rig.preprocessing.GestureVectorizer;
+import com.example.rig.preprocessing.IGestureVectorizer;
 
 
 public class GestureClassifier {
 	protected List<Gesture> trainingSet= Collections.emptyList();
 	protected String activeTrainingSet ;
 	private final Context context;
+	protected IGestureVectorizer GestureVectorizer;
+	protected IFrequencyFeatures FrequencyFeatures;
 
-	public GestureClassifier(Context context) {
+
+	public GestureClassifier(IFrequencyFeatures fft,IGestureVectorizer gV,Context context) {
 		trainingSet = new ArrayList<Gesture>();
+		GestureVectorizer= gV;
+		FrequencyFeatures=fft;
+
 
 		// initilization is imp
 
@@ -41,6 +51,13 @@ public class GestureClassifier {
 
 
 	}
+
+	public float[] GetVector(Gesture signal){
+
+
+	return GestureVectorizer.vectorizeGesture(signal);
+	}
+
 
 	public void trainData(String trainingSetName,Gesture signal){
 

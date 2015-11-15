@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: C:\\Users\\mudassir\\StudioProjects\\rig1\\app\\src\\main\\aidl\\com\\example\\rig\\ISignalProvider.aidl
+ * Original file: D:\\1Bs.Cs\\android work\\fyp November 5\\HumanActivityRecognitionUsingAndroidPhoneSensors\\app\\src\\main\\aidl\\com\\example\\rig\\ISignalProvider.aidl
  */
 package com.example.rig;
 public interface ISignalProvider extends android.os.IInterface

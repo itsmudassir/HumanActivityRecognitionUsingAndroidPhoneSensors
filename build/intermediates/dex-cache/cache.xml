@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="D:\1Bs.Cs\android work\fyp November 5\HumanActivityRecognitionUsingAndroidPhoneSensors\app\libs\gdx.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2e3fd16619d66637da5722c34305dbdf007a2a12">
+        <dex dex="D:\1Bs.Cs\android work\fyp November 5\HumanActivityRecognitionUsingAndroidPhoneSensors\app\build\intermediates\pre-dexed\debug\gdx-37afc06d7c7e019f962c49bac59b8e221c58c5a9.jar" />
+    </item>
+    <item
         jar="C:\Users\mudassir\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
         jumboMode="false"
         revision="23.0.1"

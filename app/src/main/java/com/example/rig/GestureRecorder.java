@@ -21,6 +21,7 @@
  */
 package com.example.rig;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,13 +41,17 @@ public class GestureRecorder implements SensorEventListener {
 		MOTION_DETECTION, PUSH_TO_GESTURE , IDLE
 	};
 
-	final int MIN_GESTURE_SIZE = 50;
+	final int MIN_GESTURE_SIZE = 63;  //0 to 63 = 64 window as the fft takes a window in powers of 2
 	float THRESHOLD = 2;
 	SensorManager sensorManager;
 	boolean isRecording;
 
 	int stepsSinceNoMovement;
 	ArrayList<float[]> gestureValues;
+	ArrayList<float[]> A;
+	ArrayList<float[]> subA;
+	ArrayList<float[]> B;
+	ArrayList<float[]> subB;
 	Context context;
 	GestureRecorderListener listener;
 	boolean isRunning;
@@ -55,6 +60,10 @@ public class GestureRecorder implements SensorEventListener {
 	public GestureRecorder(Context context) {
 		this.context = context;
 		gestureValues = new ArrayList<float[]>();
+		A= new ArrayList<float[]>();
+		B= new ArrayList<float[]>();
+		subA= new ArrayList<float[]>();
+		subB= new ArrayList<float[]>();
 
 	}
 
@@ -100,11 +109,39 @@ public class GestureRecorder implements SensorEventListener {
 
 		}
 	}
+	boolean window=false;
+
 	public void onPushToTrain() {
 
 		if (gestureValues.size() > MIN_GESTURE_SIZE) {
 
-			listener.onGestureRecordedTest(gestureValues);
+
+
+			if(window){  //after 1st window
+B=gestureValues;
+			for(int i=0;i<32;i++) {
+
+
+				subA.add(i,A.get(31+i)) ;
+				subA.add(32+i,B.get(i));
+				//fix it
+				Log.d("SubA!!!  " + subA.get(i)[0]," Value^^^^^^^^^^^^^^^^^^^\n");
+				Log.d("SubB!!!  " + subB.get(i)[0]," Value^^^^^^^^^^^^^^^^^^^\n");
+
+			}
+				Log.d("subA "+subA.size(), "subB "+subB.size());
+				subA.clear();
+				subB.clear();
+				A=B;
+				Log.d("Below A=b","");
+			return;
+
+			}
+			Log.d("in 1st window "+gestureValues.size(),"############################");
+
+			//listener.onGestureRecordedTest(gestureValues);
+window=true;
+			A=gestureValues;
 			gestureValues.clear();
 			Log.d("PushtoTrain", "w");
 

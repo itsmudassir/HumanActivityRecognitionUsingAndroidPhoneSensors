@@ -2,30 +2,22 @@ package com.example.rig;
 
 import java.util.ArrayList;
 
-import com.example.rig.GestureRecorder.RecordMode;
-
-
 
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.RemoteException;
 import android.util.Log;
-import android.view.Menu;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.rig.featureExtraction.FastFT;
+import com.example.rig.preprocessing.GestureVectorizer;
+
 
 public class SignalProvider extends Service implements  GestureRecorderListener  {
 	GestureRecorder recorder;
 	GestureClassifier classifier;
+	//Vectorize vector;
 	String activeTrainingSet="walk";
 	String activeLearnLabel;
 	ArrayList<float[]> value;
@@ -51,7 +43,8 @@ public class SignalProvider extends Service implements  GestureRecorderListener 
 	@Override
 	public void onCreate() {
 		recorder = new GestureRecorder(this);
-		classifier = new GestureClassifier(this);
+		classifier = new GestureClassifier(new FastFT(),new GestureVectorizer(),this);
+		//vector = new Vectorize(this);
 		ArrayList<float[]> value= new ArrayList<float[]>();
 
 		super.onCreate();
@@ -169,9 +162,11 @@ public class SignalProvider extends Service implements  GestureRecorderListener 
 
 	}
 	double results=00;
+	float[] FSpectrum;
 	@Override
 	public void onGestureRecordedTest(ArrayList<float[]> value1) {
 		value=value1;
+		float[] vector= new float[value1.size()];
 		// TODO Auto-generated method stub
 		//recorder.stop();
 
@@ -186,7 +181,15 @@ public class SignalProvider extends Service implements  GestureRecorderListener 
 			//classifier.loadTrainingSet("walk");
 //results++;
 			//Log.d(activeTrainingSet, activeLearnLabel);
+vector=classifier.GetVector(new Gesture(value,"TEST"));
 
+			//Log.d("vectorLength"+vector.length, "**********************************");
+
+ 		FSpectrum=classifier.FrequencyFeatures.GetFFTSpectrum(vector);
+			for(int i=0;i<FSpectrum.length;i++){
+				Log.d("Main Fspec", " Val= "+FSpectrum[i]);
+
+			}
 			results=classifier.Classifysignal(new Gesture(value,"TEST"),activeTrainingSet);
 			Toast.makeText( getApplicationContext(), "DTW DIST="+Double.toString(results), Toast.LENGTH_SHORT).show();
 			//recorder.start();
